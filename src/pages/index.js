@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className={`min-h-[100dvh]`}>
       <div className="pt-16">
-        <p>KEMENSOS</p>
+        <p>KEMENSOS cov-19</p>
       </div>
     </main>
   );
