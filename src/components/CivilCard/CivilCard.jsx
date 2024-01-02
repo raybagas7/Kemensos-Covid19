@@ -10,7 +10,7 @@ const CivilCard = ({
   kab_kota,
 }) => {
   return (
-    <div>
+    <div className="rounded-lg border-[1px] border-border p-3 shadow">
       <p>{nama}</p>
       <p>{foto_ktp}</p>
       <p>{umur}</p>

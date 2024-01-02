@@ -30,7 +30,7 @@ export default function Home() {
         <p>KEMENSOS cov-19</p>
         <ActionContainer />
         {initialize ? null : (
-          <div>
+          <div className="grid-cols-civil-card max-md:grid-cols-mobile-civil-card mt-5 grid gap-3">
             {civilsData.map((civil) => (
               <CivilCard key={civil.id} {...civil} />
             ))}
