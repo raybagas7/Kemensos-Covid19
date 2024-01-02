@@ -1,3 +1,5 @@
+import CoreLayout from "@/components/Layout/CoreLayout";
+
 export default function Home() {
   return (
     <main className={`min-h-[100dvh]`}>
@@ -7,3 +9,7 @@ export default function Home() {
     </main>
   );
 }
+
+Home.getLayout = function getLayout(page) {
+  return <CoreLayout>{page}</CoreLayout>;
+};
