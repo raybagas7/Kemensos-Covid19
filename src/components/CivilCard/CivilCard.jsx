@@ -10,14 +10,22 @@ const CivilCard = ({
   kab_kota,
 }) => {
   return (
-    <div className="rounded-lg border-[1px] border-border p-3 shadow">
-      <p>{nama}</p>
-      <p>{foto_ktp}</p>
-      <p>{umur}</p>
-      <p>{gender}</p>
-      <p>{provinsi}</p>
-      <p>{kab_kota}</p>
-      <p>{nik}</p>
+    <div className="overflow-hidden rounded-lg border-[1px] border-border shadow">
+      <div className="flex justify-between gap-2 bg-primary px-3 py-1 text-primary-foreground">
+        <p>NIK</p>
+        <p>{nik}</p>
+      </div>
+      <div className="flex px-3 py-1">
+        <div className="flex-1">a</div>
+        <div className="flex-[2]">
+          <p>{nama}</p>
+          <p>{foto_ktp}</p>
+          <p>{umur}</p>
+          <p>{gender}</p>
+          <p>{provinsi}</p>
+          <p>{kab_kota}</p>
+        </div>
+      </div>
     </div>
   );
 };
