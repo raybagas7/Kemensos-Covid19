@@ -10,6 +10,14 @@ const CivilCard = ({
   provinsi,
   kab_kota,
 }) => {
+  let rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
+
+  let initials = [...nama.matchAll(rgx)] || [];
+
+  initials = (
+    (initials.shift()?.[1] || "") + (initials.pop()?.[1] || "")
+  ).toUpperCase();
+
   return (
     <div className="cursor-pointer overflow-hidden rounded-lg border-[1px] border-border shadow transition duration-150 hover:shadow-md">
       <div className="flex justify-between gap-2 bg-primary px-3 py-1 text-primary-foreground">
@@ -21,7 +29,7 @@ const CivilCard = ({
           <Avatar className="h-full w-full rounded-lg border-[1px] border-border">
             <AvatarImage
               className=" object-cover"
-              src="https://github.com/shadcn.png"
+              src={`https://dummyimage.com/360x360/FFCC29/ffffff.jpg&text=${initials}`}
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
