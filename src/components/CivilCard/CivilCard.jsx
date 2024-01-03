@@ -6,7 +6,7 @@ const CivilCard = ({
   nik,
   foto_ktp,
   umur,
-  gender,
+  kelamin,
   provinsi,
   kab_kota,
 }) => {
@@ -40,7 +40,7 @@ const CivilCard = ({
           <p>
             {umur} <span>Tahun</span>
           </p>
-          <p>{gender}</p>
+          <p>{kelamin}</p>
           <p>{provinsi}</p>
           <p>{kab_kota}</p>
         </div>

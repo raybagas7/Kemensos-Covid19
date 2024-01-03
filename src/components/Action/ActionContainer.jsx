@@ -2,12 +2,13 @@ import { useModal } from "@/store/modal";
 import React, { useState } from "react";
 import OrderBy from "./OrderBy";
 import SortBy from "./SortBy";
+import NewCivilForm from "../Form/NewCivilForm";
 
 const ActionContainer = ({ onChangeFilterManagement }) => {
   const { showModal } = useModal();
 
   const showCivilForm = () => {
-    showModal(<div>test modal</div>);
+    showModal(<NewCivilForm />);
   };
   return (
     <div className="flex justify-between">
