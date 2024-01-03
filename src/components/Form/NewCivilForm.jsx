@@ -64,8 +64,8 @@ const formSchema = z.object({
         ),
       "Format foto harus berformat antara .jpg, .jpeg, .png dan .bmp",
     ),
-  type: z.enum(["all", "mentions", "none"], {
-    required_error: "You need to select a notification type.",
+  gender: z.enum(["Laki-laki", "Perempuan"], {
+    required_error: "Required.",
   }),
 });
 
@@ -88,7 +88,7 @@ const NewCivilForm = () => {
               control={form.control}
               name="nama"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className=" space-y-2">
                   <FormLabel>
                     Nama<span className="text-red-500">*</span>
                   </FormLabel>
@@ -213,7 +213,7 @@ const NewCivilForm = () => {
               )}
             />
           </div>
-          <div>a</div>
+          <div></div>
         </div>
         <Button type="submit">Submit</Button>
       </form>
