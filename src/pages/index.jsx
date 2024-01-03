@@ -8,11 +8,24 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [civilsData, setCivilsData] = useState();
   const [initialize, setInitialize] = useState(true);
+  const [filterManagement, setFilterManagement] = useState({
+    sort: "dibuat",
+    order: "asc",
+  });
+
+  const onChangeFilterManagement = (value, key) => {
+    setFilterManagement({ ...filterManagement, [key]: value });
+  };
+
+  console.log(filterManagement);
 
   useEffect(() => {
     const getCivils = async () => {
       try {
-        const response = await services.getCivilsData();
+        const response = await services.getCivilsData(
+          filterManagement.sort,
+          filterManagement.order,
+        );
         setCivilsData(response.data);
         setInitialize(false);
       } catch (error) {
@@ -21,16 +34,16 @@ export default function Home() {
     };
 
     getCivils();
-  }, []);
+  }, [filterManagement]);
 
   return (
     <main className={`min-h-[100dvh]`}>
       <Modal backDropClose />
       <div className="pt-20">
         <p>KEMENSOS cov-19</p>
-        <ActionContainer />
+        <ActionContainer onChangeFilterManagement={onChangeFilterManagement} />
         {initialize ? null : (
-          <div className="grid-cols-civil-card max-md:grid-cols-mobile-civil-card mt-5 grid gap-3">
+          <div className="mt-5 grid grid-cols-civil-card gap-3 max-md:grid-cols-mobile-civil-card">
             {civilsData.map((civil) => (
               <CivilCard key={civil.id} {...civil} />
             ))}

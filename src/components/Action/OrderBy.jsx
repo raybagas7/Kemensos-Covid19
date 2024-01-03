@@ -10,15 +10,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const OrderBy = () => {
+const OrderBy = ({ onChangeFilterManagement }) => {
   return (
-    <Select>
-      <SelectTrigger className="w-[180px]"> 
+    <Select
+      defaultValue="asc"
+      onValueChange={(v) => onChangeFilterManagement(v, "order")}
+    >
+      <SelectTrigger className="w-[180px]">
         <SelectValue defaultValue="asc" placeholder="Select the order" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Order</SelectLabel>
+          <SelectLabel>Order by</SelectLabel>
           <SelectItem value="asc">Ascending</SelectItem>
           <SelectItem value="desc">Descending</SelectItem>
         </SelectGroup>
