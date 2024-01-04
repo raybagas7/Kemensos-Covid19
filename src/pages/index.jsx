@@ -1,5 +1,6 @@
 import ActionContainer from "@/components/Action/ActionContainer";
 import CivilCard from "@/components/CivilCard/CivilCard";
+import NewCivilForm from "@/components/Form/NewCivilForm";
 import CoreLayout from "@/components/Layout/CoreLayout";
 import Modal from "@/components/Modal/Modal";
 import { services } from "@/lib/services";
@@ -16,8 +17,6 @@ export default function Home() {
   const onChangeFilterManagement = (value, key) => {
     setFilterManagement({ ...filterManagement, [key]: value });
   };
-
-  console.log(filterManagement);
 
   useEffect(() => {
     const getCivils = async () => {

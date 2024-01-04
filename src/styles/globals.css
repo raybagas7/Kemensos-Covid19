@@ -65,3 +65,10 @@
     margin: 0;
   }
 }
+
+#provinsi-combobox::-webkit-scrollbar,
+#new-address-form::-webkit-scrollbar,
+#checkout-promos::-webkit-scrollbar,
+#aside-navigation::-webkit-scrollbar {
+  @apply h-0 w-0;
+}

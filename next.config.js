@@ -5,7 +5,7 @@ const nextConfig = {
     BASE_API_URL: process.env.BASE_JSON_URL,
   },
   images: {
-    domains: ["dummyimage.com"],
+    remotePatterns: [{ protocol: "https", hostname: "dummyimage.com" }],
   },
 };
 

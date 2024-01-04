@@ -14,8 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { useEffect, useState } from "react";
+import ProvinsiField from "./ProvinsiField";
+import KotaField from "./KotaField";
 
-const MAX_KTP_SIZE = 2097152; // 5 MB
+const MAX_KTP_SIZE = 2097152;
 const ALLOWED_IMAGE_TYPES = [
   "image/jpg",
   "image/jpeg",
@@ -67,9 +71,21 @@ const formSchema = z.object({
   gender: z.enum(["Laki-laki", "Perempuan"], {
     required_error: "Required.",
   }),
+  provinsi: z.string({
+    required_error: "Pilih provinsi.",
+  }),
+  kab_kota: z.string({
+    required_error: "Pilih kabupaten/kota.",
+  }),
 });
 
 const NewCivilForm = () => {
+  const [locationId, setLocationId] = useState({
+    provinsiId: undefined,
+    kotaId: undefined,
+  });
+  const [provinsi, setProvinsi] = useState();
+  const [kota, setKota] = useState();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: { nama: "" },
@@ -78,6 +94,50 @@ const NewCivilForm = () => {
   const onSubmit = (value) => {
     console.log(value);
   };
+
+  const onChoosingLocation = (value, key) => {
+    setLocationId({ ...locationId, [key]: value });
+  };
+
+  useEffect(() => {
+    if (!provinsi) {
+      const getProvinsi = async () => {
+        try {
+          const response = await fetch("/api/provinsi");
+          const provinsiData = await response.json();
+          console.log(provinsiData);
+          setProvinsi(provinsiData);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      getProvinsi();
+    }
+  }, [provinsi]);
+
+  useEffect(() => {
+    if (locationId.provinsiId) {
+      const getKota = async () => {
+        try {
+          const response = await fetch(
+            `/api/kota?provinsiId=${locationId.provinsiId}`,
+          );
+          const getDataKota = await response.json();
+          console.log(getDataKota);
+          setKota(getDataKota);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      getKota();
+    }
+  }, [locationId.provinsiId, locationId]);
+
+  console.log(locationId);
+
+  if (!provinsi) {
+    return null;
+  }
 
   return (
     <Form {...form}>
@@ -213,7 +273,122 @@ const NewCivilForm = () => {
               )}
             />
           </div>
-          <div></div>
+          <div>
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-base">Gender</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex items-center justify-center "
+                    >
+                      <FormItem className="flex items-center space-x-1 ">
+                        <FormControl>
+                          <RadioGroupItem
+                            className="self-end"
+                            value="Laki-laki"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Laki-laki</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-1 ">
+                        <FormControl>
+                          <RadioGroupItem
+                            className="self-end"
+                            value="Perempuan"
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Perempuan</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <ProvinsiField
+              form={form}
+              provinsi={provinsi}
+              onChoosingLocation={onChoosingLocation}
+              setKota={setKota}
+            />
+            <KotaField
+              form={form}
+              kota={kota}
+              onChoosingLocation={onChoosingLocation}
+            />
+            {/* <FormField
+              control={form.control}
+              name="kab_kota"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Kabupaten/Kota</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          disabled={kota === undefined}
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-[200px] justify-between",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          {field.value
+                            ? kota.find((kota) => kota.name === field.value)
+                                ?.name
+                            : "Select language"}
+                          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      id="provinsi-combobox"
+                      className="z-[150] max-h-80 w-[200px] overflow-y-scroll p-0"
+                    >
+                      <Command>
+                        <CommandInput
+                          placeholder="Cari Kota..."
+                          className="h-9"
+                        />
+                        <CommandEmpty>Kab/Kota tidak ditemukan.</CommandEmpty>
+                        <CommandGroup>
+                          {kota &&
+                            kota.map((kota) => (
+                              <CommandItem
+                                value={kota.name}
+                                key={kota.name}
+                                onSelect={() => {
+                                  form.setValue("kab_kota", kota.name);
+                                  onChoosingLocation(kota.id, "kotaId");
+                                }}
+                              >
+                                {kota.name}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    kota.name === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+          </div>
         </div>
         <Button type="submit">Submit</Button>
       </form>
