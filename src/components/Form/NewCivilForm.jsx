@@ -85,6 +85,18 @@ const formSchema = z.object({
   kelurahan_desa: z.string({
     required_error: "Pilih kecamatan.",
   }),
+  rt: z
+    .string()
+    .regex(/^[0-9]/)
+    .refine((value) => parseInt(value) > 0, {
+      message: "Tidak boleh 0",
+    }),
+  rw: z
+    .string()
+    .regex(/^[0-9]/)
+    .refine((value) => parseInt(value) > 0, {
+      message: "Tidak boleh 0",
+    }),
 });
 
 const NewCivilForm = () => {
@@ -381,7 +393,56 @@ const NewCivilForm = () => {
                 kelurahan={kelurahan}
                 onChoosingLocation={onChoosingLocation}
               />
+              <div className="flex gap-3">
+                <FormField
+                  control={form.control}
+                  name="rt"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        RT<span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="RT"
+                          onKeyDown={(e) =>
+                            ["e", "E", "+", "-", ".", ","].includes(e.key) &&
+                            e.preventDefault()
+                          }
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="rw"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        RW<span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="RW"
+                          onKeyDown={(e) =>
+                            ["e", "E", "+", "-", ".", ","].includes(e.key) &&
+                            e.preventDefault()
+                          }
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
+            <div></div>
           </div>
         </div>
         <Button type="submit">Submit</Button>

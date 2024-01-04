@@ -41,7 +41,7 @@ const KecamatanField = ({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  onClick={() => setOpen(true)}
+                  onClick={() => setOpen(!open)}
                   disabled={kecamatan === undefined}
                   variant="outline"
                   role="combobox"

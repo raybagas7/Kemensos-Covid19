@@ -43,7 +43,7 @@ const ProvinsiField = ({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  onClick={() => setOpen(true)}
+                  onClick={() => setOpen(!open)}
                   variant="outline"
                   role="combobox"
                   className={cn(

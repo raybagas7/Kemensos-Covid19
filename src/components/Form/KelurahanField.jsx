@@ -36,7 +36,7 @@ const KelurahanField = ({ form, kelurahan, onChoosingLocation }) => {
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  onClick={() => setOpen(true)}
+                  onClick={() => setOpen(!open)}
                   disabled={kelurahan === undefined}
                   variant="outline"
                   role="combobox"

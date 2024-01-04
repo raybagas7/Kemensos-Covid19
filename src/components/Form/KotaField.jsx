@@ -42,7 +42,7 @@ const KotaField = ({
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  onClick={() => setOpen(true)}
+                  onClick={() => setOpen(!open)}
                   disabled={kota === undefined}
                   variant="outline"
                   role="combobox"
