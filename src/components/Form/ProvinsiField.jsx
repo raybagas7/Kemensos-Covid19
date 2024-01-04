@@ -38,12 +38,14 @@ const ProvinsiField = ({
       name="provinsi"
       render={({ field }) => (
         <FormItem className="mt-6 flex flex-col">
-          <FormLabel>Provinsi</FormLabel>
-          <Popover open={open}>
+          <FormLabel>
+            Provinsi<span className="text-red-500">*</span>
+          </FormLabel>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  onClick={() => setOpen(!open)}
+                  aria-expanded={open}
                   variant="outline"
                   role="combobox"
                   className={cn(

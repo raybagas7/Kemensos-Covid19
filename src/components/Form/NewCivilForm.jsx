@@ -20,6 +20,9 @@ import ProvinsiField from "./ProvinsiField";
 import KotaField from "./KotaField";
 import KecamatanField from "./KecamatanField";
 import KelurahanField from "./KelurahanField";
+import { Textarea } from "../ui/textarea";
+
+import AlasanBantuan from "./AlasanBantuan";
 
 const MAX_KTP_SIZE = 2097152;
 const ALLOWED_IMAGE_TYPES = [
@@ -83,7 +86,7 @@ const formSchema = z.object({
     required_error: "Pilih kecamatan.",
   }),
   kelurahan_desa: z.string({
-    required_error: "Pilih kecamatan.",
+    required_error: "Pilih kelurahan.",
   }),
   rt: z
     .string()
@@ -97,6 +100,26 @@ const formSchema = z.object({
     .refine((value) => parseInt(value) > 0, {
       message: "Tidak boleh 0",
     }),
+  gaji_sebelum: z
+    .string()
+    .regex(/^[0-9]/)
+    .refine((value) => parseInt(value) > 0, {
+      message: "Tidak boleh 0",
+    }),
+  gaji_sesudah: z
+    .string()
+    .regex(/^[0-9]/)
+    .refine((value) => parseInt(value) > 0, {
+      message: "Tidak boleh 0",
+    }),
+  alamat: z.string().max(255, {
+    message: "Panjang karakter alamat maksimal 255.",
+  }),
+  alasan: z
+    .string({
+      required_error: "Pilih alasan.",
+    })
+    .refine((value) => value.length > 0, { message: "Isi terlebih dahulu" }),
 });
 
 const NewCivilForm = () => {
@@ -188,6 +211,7 @@ const NewCivilForm = () => {
       getKelurahan();
     }
   }, [locationId.kecamatanId]);
+  console.log(form.getValues("alasan"));
 
   console.log(locationId);
 
@@ -335,7 +359,9 @@ const NewCivilForm = () => {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Gender</FormLabel>
+                  <FormLabel>
+                    Gender<span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -442,7 +468,116 @@ const NewCivilForm = () => {
                 />
               </div>
             </div>
-            <div></div>
+          </div>
+          <div className="flex-1">
+            <FormField
+              control={form.control}
+              name="alamat"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Alamat<span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Alamat Lengkap"
+                      className="h-32 resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gaji_sesudah"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Gaji Sesudah<span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Gaji Sesudah Pandemi"
+                      onKeyDown={(e) =>
+                        ["e", "E", "+", "-", ".", ","].includes(e.key) &&
+                        e.preventDefault()
+                      }
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gaji_sebelum"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Gaji Sebelum<span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Gaji Sebelum Pandemi"
+                      onKeyDown={(e) =>
+                        ["e", "E", "+", "-", ".", ","].includes(e.key) &&
+                        e.preventDefault()
+                      }
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <AlasanBantuan form={form} />
+            {/* <div className="space-y-3">
+              <FormField
+                control={form.control}
+                name="alasan"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Alasan</FormLabel>
+                    <Select
+                      onValueChange={(v) => {
+                        console.log(v);
+                        field.onChange(v);
+                      }}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Alasan membutuhkan bantuan" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="z-[150]">
+                        <SelectItem value="Kehilangan pekerjaan">
+                          Kehilangan pekerjaan
+                        </SelectItem>
+                        <SelectItem value="Kepala keluarga terdampak atau korban Covid-19">
+                          Kepala keluarga terdampak atau korban Covid-19
+                        </SelectItem>
+                        <SelectItem value="Tergolong fakir/miskin semenjak sebelum Covid-19">
+                          Tergolong fakir/miskin semenjak sebelum Covid-19
+                        </SelectItem>
+                        <SelectItem value="lainnya">Lainnya</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Input
+                disabled={form.getValues("alasan") === "lainnya"}
+                className="self-end"
+                type="text"
+              />
+            </div> */}
           </div>
         </div>
         <Button type="submit">Submit</Button>

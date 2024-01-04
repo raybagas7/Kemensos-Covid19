@@ -36,12 +36,14 @@ const KecamatanField = ({
       name="kecamatan"
       render={({ field }) => (
         <FormItem className="flex flex-col ">
-          <FormLabel className="leading-6">Kecamatan</FormLabel>
-          <Popover open={open}>
+          <FormLabel className="leading-6">
+            Kecamatan<span className="text-red-500">*</span>
+          </FormLabel>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  onClick={() => setOpen(!open)}
+                  aria-expanded={open}
                   disabled={kecamatan === undefined}
                   variant="outline"
                   role="combobox"

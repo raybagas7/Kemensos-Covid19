@@ -31,12 +31,14 @@ const KelurahanField = ({ form, kelurahan, onChoosingLocation }) => {
       name="kelurahan_desa"
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel className="leading-6">Kelurahan / Desa</FormLabel>
-          <Popover open={open}>
+          <FormLabel className="leading-6">
+            Kelurahan/Desa<span className="text-red-500">*</span>
+          </FormLabel>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  onClick={() => setOpen(!open)}
+                  aria-expanded={open}
                   disabled={kelurahan === undefined}
                   variant="outline"
                   role="combobox"
