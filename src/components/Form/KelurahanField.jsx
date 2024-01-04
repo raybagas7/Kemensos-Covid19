@@ -22,38 +22,34 @@ import { Button } from "@/components/ui/button";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 
-const KotaField = ({
-  form,
-  kota,
-  onChoosingLocation,
-  setKecamatan,
-  setKelurahan,
-}) => {
+const KelurahanField = ({ form, kelurahan, onChoosingLocation }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <FormField
       control={form.control}
-      name="kab_kota"
+      name="kelurahan_desa"
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel className="leading-6">Kabupaten/Kota</FormLabel>
+          <FormLabel className="leading-6">Kelurahan / Desa</FormLabel>
           <Popover open={open}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
                   onClick={() => setOpen(true)}
-                  disabled={kota === undefined}
+                  disabled={kelurahan === undefined}
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-full justify-between",
+                    "w-w-full justify-between",
                     !field.value && "text-muted-foreground",
                   )}
                 >
                   {field.value
-                    ? kota.find((kota) => kota.name === field.value)?.name
-                    : "Pilih Kota"}
+                    ? kelurahan.find(
+                        (kelurahan) => kelurahan.name === field.value,
+                      )?.name
+                    : "Pilih Kelurahan"}
                   <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
@@ -63,31 +59,25 @@ const KotaField = ({
               className="z-[150] max-h-80 w-full overflow-y-scroll p-0"
             >
               <Command>
-                <CommandInput placeholder="Cari Kota..." className="h-9" />
-                <CommandEmpty>Kab/Kota tidak ditemukan.</CommandEmpty>
+                <CommandInput placeholder="Cari Kelurahan..." className="h-9" />
+                <CommandEmpty>Kelurahan/Desa tidak ditemukan.</CommandEmpty>
                 <CommandGroup>
-                  {kota &&
-                    kota.map((kota) => (
+                  {kelurahan &&
+                    kelurahan.map((kelurahan) => (
                       <CommandItem
-                        value={kota.name}
-                        key={kota.name}
+                        value={kelurahan.name}
+                        key={kelurahan.name}
                         onSelect={() => {
-                          if (form.getValues("kab_kota") !== kota.name) {
-                            setKecamatan(undefined);
-                            setKelurahan(undefined);
-                            form.setValue("kecamatan", undefined);
-                            form.setValue("kelurahan_desa", undefined);
-                          }
-                          form.setValue("kab_kota", kota.name);
-                          onChoosingLocation(kota.id, "kotaId");
+                          form.setValue("kelurahan_desa", kelurahan.name);
+                          onChoosingLocation(kelurahan.id, "kelurahanId");
                           setOpen(false);
                         }}
                       >
-                        {kota.name}
+                        {kelurahan.name}
                         <CheckIcon
                           className={cn(
                             "ml-auto h-4 w-4",
-                            kota.name === field.value
+                            kelurahan.name === field.value
                               ? "opacity-100"
                               : "opacity-0",
                           )}
@@ -105,4 +95,4 @@ const KotaField = ({
   );
 };
 
-export default KotaField;
+export default KelurahanField;

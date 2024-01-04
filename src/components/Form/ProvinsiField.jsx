@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   FormField,
@@ -22,35 +22,45 @@ import { Button } from "@/components/ui/button";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 
-const ProvinsiField = ({ form, provinsi, onChoosingLocation, setKota }) => {
+const ProvinsiField = ({
+  form,
+  provinsi,
+  onChoosingLocation,
+  setKota,
+  setKecamatan,
+  setKelurahan,
+}) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <FormField
       control={form.control}
       name="provinsi"
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className="mt-6 flex flex-col">
           <FormLabel>Provinsi</FormLabel>
-          <Popover>
+          <Popover open={open}>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
+                  onClick={() => setOpen(true)}
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-[200px] justify-between",
+                    "w-full justify-between",
                     !field.value && "text-muted-foreground",
                   )}
                 >
                   {field.value
                     ? provinsi.find((prov) => prov.name === field.value)?.name
-                    : "Select language"}
+                    : "Pilih Provinsi"}
                   <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
             </PopoverTrigger>
             <PopoverContent
               id="provinsi-combobox"
-              className="z-[150] max-h-80 w-[200px] overflow-y-scroll p-0"
+              className="z-[150] max-h-80 w-full overflow-y-scroll p-0"
             >
               <Command>
                 <CommandInput placeholder="Cari Provinsi..." className="h-9" />
@@ -61,10 +71,17 @@ const ProvinsiField = ({ form, provinsi, onChoosingLocation, setKota }) => {
                       value={prov.name}
                       key={prov.name}
                       onSelect={() => {
+                        if (form.getValues("provinsi") !== prov.name) {
+                          setKota(undefined);
+                          setKecamatan(undefined);
+                          setKelurahan(undefined);
+                          form.setValue("kab_kota", undefined);
+                          form.setValue("kecamatan", undefined);
+                          form.setValue("kelurahan_desa", undefined);
+                        }
                         form.setValue("provinsi", prov.name);
                         onChoosingLocation(prov.id, "provinsiId");
-                        setKota(undefined);
-                        form.setValue("kab_kota", undefined);
+                        setOpen(false);
                       }}
                     >
                       {prov.name}

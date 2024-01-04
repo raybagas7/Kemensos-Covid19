@@ -75,9 +75,57 @@ export const services = (() => {
     };
   };
 
+  const getDataKecamatan = async (kotaId) => {
+    const response = await fetch(
+      `https://emsifa.github.io/api-wilayah-indonesia/api/districts/${kotaId}.json`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Something happened to our server");
+    }
+
+    const responseJson = await response.json();
+    return {
+      error: false,
+      data: responseJson,
+      message: "success",
+    };
+  };
+
+  const getDataKelurahan = async (kecamatanId) => {
+    const response = await fetch(
+      `https://emsifa.github.io/api-wilayah-indonesia/api/villages/${kecamatanId}.json`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Something happened to our server");
+    }
+
+    const responseJson = await response.json();
+    return {
+      error: false,
+      data: responseJson,
+      message: "success",
+    };
+  };
+
   return {
     getCivilsData,
     getProvinsiData,
     getDataKota,
+    getDataKecamatan,
+    getDataKelurahan,
   };
 })();
