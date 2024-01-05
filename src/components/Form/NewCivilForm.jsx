@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,7 @@ import KelurahanField from "./KelurahanField";
 import { Textarea } from "../ui/textarea";
 
 import AlasanBantuan from "./AlasanBantuan";
+import { Checkbox } from "../ui/checkbox";
 
 const MAX_KTP_SIZE = 2097152;
 const ALLOWED_IMAGE_TYPES = [
@@ -120,6 +122,9 @@ const formSchema = z.object({
       required_error: "Pilih alasan.",
     })
     .refine((value) => value.length > 0, { message: "Isi terlebih dahulu" }),
+  confirm: z.boolean().refine((value) => value === true, {
+    message: "Harus dipersetujui terlebih dahulu.",
+  }),
 });
 
 const NewCivilForm = () => {
@@ -216,14 +221,19 @@ const NewCivilForm = () => {
   console.log(locationId);
 
   if (!provinsi) {
-    return null;
+    return <ReloadIcon className="m-5 h-10 w-10 animate-spin" />;
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex gap-5">
-          <div className="flex-1">
+      <form
+        id="civil-form"
+        className="max-h-[80dvh] overflow-y-scroll p-3"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <h1 className="mb-3 text-center text-xl font-bold">Data Bansos</h1>
+        <div className="flex gap-5 max-md:flex-col">
+          <div className="flex-1 shrink-0">
             <FormField
               control={form.control}
               name="nama"
@@ -353,7 +363,7 @@ const NewCivilForm = () => {
               )}
             />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 shrink-0">
             <FormField
               control={form.control}
               name="gender"
@@ -469,7 +479,7 @@ const NewCivilForm = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 shrink-0">
             <FormField
               control={form.control}
               name="alamat"
@@ -580,7 +590,38 @@ const NewCivilForm = () => {
             </div> */}
           </div>
         </div>
-        <Button type="submit">Submit</Button>
+        <FormField
+          control={form.control}
+          name="confirm"
+          render={({ field }) => {
+            return (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                <div>
+                  <div className="mt-3 flex items-center gap-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={(checked) => {
+                          console.log(checked);
+                          field.onChange(checked);
+                        }}
+                      />
+                    </FormControl>
+                    <FormLabel className="text-xs font-normal">
+                      Saya menyatakan bahwa data yang diisikan adalah benar dan
+                      siap mempertanggungjawabkan apabila ditemukan
+                      ketidaksesuaian dalam data tersebut.
+                    </FormLabel>
+                  </div>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            );
+          }}
+        />
+        <div className="mt-10 flex justify-center">
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   );

@@ -16,7 +16,7 @@ const OrderBy = ({ onChangeFilterManagement }) => {
       defaultValue="asc"
       onValueChange={(v) => onChangeFilterManagement(v, "order")}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px] max-md:w-[100px] max-md:text-xs">
         <SelectValue defaultValue="asc" placeholder="Select the order" />
       </SelectTrigger>
       <SelectContent>

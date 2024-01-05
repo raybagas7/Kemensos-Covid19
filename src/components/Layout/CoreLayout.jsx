@@ -11,7 +11,7 @@ const CoreLayout = ({ children }) => {
           <ThemeToggle />
         </div>
         <MainNavigation />
-        <div className="w-full px-3 md:px-28">{children}</div>
+        <div className="w-full">{children}</div>
       </div>
     </ThemeProvider>
   );

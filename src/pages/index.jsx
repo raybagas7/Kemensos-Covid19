@@ -36,13 +36,12 @@ export default function Home() {
   }, [filterManagement]);
 
   return (
-    <main className={`min-h-[100dvh]`}>
+    <main className={`min-h-[100dvh] `}>
       <Modal backDropClose />
       <div className="pt-20">
-        <p>KEMENSOS cov-19</p>
         <ActionContainer onChangeFilterManagement={onChangeFilterManagement} />
         {initialize ? null : (
-          <div className="mt-5 grid grid-cols-civil-card gap-3 max-md:grid-cols-mobile-civil-card">
+          <div className="mt-5 grid grid-cols-civil-card gap-3 px-3 max-md:grid-cols-mobile-civil-card md:px-28">
             {civilsData.map((civil) => (
               <CivilCard key={civil.id} {...civil} />
             ))}

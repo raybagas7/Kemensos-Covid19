@@ -16,7 +16,7 @@ const Modal = ({ backDropClose }) => {
   return (
     <div
       onClick={backDropClose ? hideModal : () => {}}
-      className="fixed inset-0 top-0 z-[120] flex h-[100dvh] w-[100dvw] items-center justify-center bg-background/40 backdrop-blur-sm"
+      className="fixed inset-0 top-0 z-[120] flex h-[100dvh] w-[100dvw] items-center justify-center bg-background/40 backdrop-blur-sm max-md:px-5"
     >
       <div
         onClick={(e) => clickOutsidePropagation(e)}

@@ -16,7 +16,7 @@ const SortBy = ({ onChangeFilterManagement }) => {
       defaultValue="dibuat"
       onValueChange={(v) => onChangeFilterManagement(v, "sort")}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[180px] max-md:w-[100px] max-md:text-xs">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

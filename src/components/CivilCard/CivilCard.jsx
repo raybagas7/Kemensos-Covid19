@@ -24,7 +24,7 @@ const CivilCard = ({
         <p>NIK</p>
         <p>{nik}</p>
       </div>
-      <div className="flex gap-3 p-3">
+      <div className="flex gap-3 p-3 ">
         <div className="flex-1">
           <Avatar className="h-full w-full rounded-lg border-[1px] border-border">
             <AvatarImage
@@ -34,15 +34,14 @@ const CivilCard = ({
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
-        <div className="flex-[2] text-sm">
-          <p>{nama}</p>
-          <p>{foto_ktp}</p>
-          <p>
+        <div className="flex flex-[2] flex-col justify-between text-sm max-md:text-xs">
+          <p className="line-clamp-1">{nama}</p>
+          <p className="line-clamp-1">
             {umur} <span>Tahun</span>
           </p>
-          <p>{kelamin}</p>
-          <p>{provinsi}</p>
-          <p>{kab_kota}</p>
+          <p className="line-clamp-1">{kelamin}</p>
+          <p className="line-clamp-1">{provinsi}</p>
+          <p className="line-clamp-1">{kab_kota}</p>
         </div>
       </div>
     </div>

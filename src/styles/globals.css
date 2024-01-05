@@ -67,8 +67,6 @@
 }
 
 #provinsi-combobox::-webkit-scrollbar,
-#new-address-form::-webkit-scrollbar,
-#checkout-promos::-webkit-scrollbar,
-#aside-navigation::-webkit-scrollbar {
+#civil-form::-webkit-scrollbar {
   @apply h-0 w-0;
 }
