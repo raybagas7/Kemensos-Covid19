@@ -25,6 +25,8 @@ import { Textarea } from "../ui/textarea";
 
 import AlasanBantuan from "./AlasanBantuan";
 import { Checkbox } from "../ui/checkbox";
+import { convertDateToMilis } from "@/lib/utils";
+import { services } from "@/lib/services";
 
 const MAX_KTP_SIZE = 2097152;
 const ALLOWED_IMAGE_TYPES = [
@@ -144,7 +146,42 @@ const NewCivilForm = () => {
   });
 
   const onSubmit = (value) => {
+    const date = new Date();
+
     console.log(value);
+    const payload = {
+      nama: value.nama,
+      nik: parseInt(value.nik),
+      nkk: parseInt(value.nkk),
+      foto_ktp: "",
+      foto_kk: "",
+      umur: parseInt(value.umur),
+      kelamin: value.gender,
+      provinsi: value.provinsi,
+      kab_kota: value.kab_kota,
+      kecamatan: value.kecamatan,
+      kelurahan_desa: value.kelurahan_desa,
+      alamat: value.alamat,
+      rt: parseInt(value.rt),
+      rw: parseInt(value.rw),
+      gaji_sebelum: parseInt(value.gaji_sebelum),
+      gaji_sesudah: parseInt(value.gaji_sesudah),
+      alasan: value.alasan,
+      dibuat: convertDateToMilis(String(date)),
+    };
+
+    const postCivil = async () => {
+      try {
+        const response = await services.postCivilData(payload);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    postCivil();
+
+    console.log(payload);
   };
 
   const onChoosingLocation = (value, key) => {

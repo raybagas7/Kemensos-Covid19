@@ -121,11 +121,33 @@ export const services = (() => {
     };
   };
 
+  const postCivilData = async (payload) => {
+    const response = await fetch(`${process.env.BASE_API_URL}/civils`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error("Something happened to our server");
+    }
+
+    const responseJson = await response.json();
+    return {
+      error: false,
+      data: responseJson,
+      message: "success",
+    };
+  };
+
   return {
     getCivilsData,
     getProvinsiData,
     getDataKota,
     getDataKecamatan,
     getDataKelurahan,
+    postCivilData,
   };
 })();

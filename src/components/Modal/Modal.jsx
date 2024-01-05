@@ -20,7 +20,7 @@ const Modal = ({ backDropClose }) => {
     >
       <div
         onClick={(e) => clickOutsidePropagation(e)}
-        className="flex flex-col rounded-lg border-[1px] border-border bg-background p-2 shadow"
+        className="flex max-w-[95dvw] flex-col rounded-lg border-[1px] border-border bg-background p-2 shadow"
       >
         <button
           onClick={hideModal}

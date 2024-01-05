@@ -3,6 +3,7 @@ import React from "react";
 import OrderBy from "./OrderBy";
 import SortBy from "./SortBy";
 import NewCivilForm from "../Form/NewCivilForm";
+import { IoPersonAdd } from "react-icons/io5";
 
 const ActionContainer = ({ onChangeFilterManagement }) => {
   const { showModal } = useModal();
@@ -17,7 +18,13 @@ const ActionContainer = ({ onChangeFilterManagement }) => {
           <OrderBy onChangeFilterManagement={onChangeFilterManagement} />
           <SortBy onChangeFilterManagement={onChangeFilterManagement} />
         </div>
-        <button onClick={showCivilForm}>SHOW</button>
+        <button
+          className="flex h-full items-center gap-1 rounded-full border-[1px] border-border px-3 text-xs hover:bg-primary hover:text-white max-md:py-1"
+          onClick={showCivilForm}
+        >
+          Tambah Data Baru
+          <IoPersonAdd className="h-5 w-5" />
+        </button>
       </div>
     </div>
   );
