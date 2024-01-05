@@ -11,9 +11,10 @@ const ActionContainer = ({ onChangeFilterManagement }) => {
   const showCivilForm = () => {
     showModal(<NewCivilForm />);
   };
+
   return (
     <div className="flex justify-between">
-      <div className="flex w-full items-center justify-end gap-3 px-28 max-md:flex-col max-md:px-0">
+      <div className="flex w-full items-center justify-end gap-3 max-md:flex-col">
         <div className="flex gap-3">
           <OrderBy onChangeFilterManagement={onChangeFilterManagement} />
           <SortBy onChangeFilterManagement={onChangeFilterManagement} />

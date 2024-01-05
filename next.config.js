@@ -5,7 +5,10 @@ const nextConfig = {
     BASE_API_URL: process.env.BASE_JSON_URL,
   },
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "dummyimage.com" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "dummyimage.com" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
+    ],
   },
 };
 

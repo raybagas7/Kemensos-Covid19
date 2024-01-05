@@ -157,8 +157,10 @@ const NewCivilForm = () => {
       nama: value.nama,
       nik: parseInt(value.nik),
       nkk: parseInt(value.nkk),
-      foto_ktp: "",
-      foto_kk: "",
+      foto_ktp:
+        "https://res.cloudinary.com/dro3sbdac/image/upload/v1704424990/eaeer2lengchirshwt0f.png",
+      foto_kk:
+        "https://res.cloudinary.com/dro3sbdac/image/upload/v1704424998/xgssvbny5omkfmf67u0p.png",
       umur: parseInt(value.umur),
       kelamin: value.gender,
       provinsi: value.provinsi,
