@@ -2,15 +2,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
 
-const CivilCard = ({
-  nama,
-  nik,
-  foto_ktp,
-  umur,
-  kelamin,
-  provinsi,
-  kab_kota,
-}) => {
+const CivilCard = ({ nama, nik, umur, kelamin, provinsi, kab_kota }) => {
   let rgx = new RegExp(/(\p{L}{1})\p{L}+/, "gu");
 
   let initials = [...nama.matchAll(rgx)] || [];
