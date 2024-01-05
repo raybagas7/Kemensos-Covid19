@@ -2,6 +2,7 @@ import { ThemeProvider } from "next-themes";
 import React from "react";
 import { ThemeToggle } from "../ui/theme-toggle";
 import MainNavigation from "../Navigation/MainNavigation";
+import { Toaster } from "../ui/sonner";
 
 const CoreLayout = ({ children }) => {
   return (
@@ -12,6 +13,7 @@ const CoreLayout = ({ children }) => {
         </div>
         <MainNavigation />
         <div className="w-full">{children}</div>
+        <Toaster />
       </div>
     </ThemeProvider>
   );

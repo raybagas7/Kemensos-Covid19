@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -25,8 +26,10 @@ import { Textarea } from "../ui/textarea";
 
 import AlasanBantuan from "./AlasanBantuan";
 import { Checkbox } from "../ui/checkbox";
-import { convertDateToMilis } from "@/lib/utils";
+import { convertDateToMilis, randomSuccessPost } from "@/lib/utils";
 import { services } from "@/lib/services";
+import ButtonWithLoading from "../Button/ButtonWithLoading";
+import { useLoading } from "@/store/loading";
 
 const MAX_KTP_SIZE = 2097152;
 const ALLOWED_IMAGE_TYPES = [
@@ -144,6 +147,7 @@ const NewCivilForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: { nama: "" },
   });
+  const { showLoadingSm, hideLoadingSm } = useLoading();
 
   const onSubmit = (value) => {
     const date = new Date();
@@ -171,11 +175,30 @@ const NewCivilForm = () => {
     };
 
     const postCivil = async () => {
+      showLoadingSm();
       try {
-        const response = await services.postCivilData(payload);
-        console.log(response);
+        setTimeout(async () => {
+          if (randomSuccessPost()) {
+            const response = await services.postCivilData(payload);
+            console.log(response);
+            toast("Berhasil upload data sipil", {
+              type: "success",
+            });
+            hideLoadingSm();
+          } else {
+            toast("Gagal upload data sipil", {
+              type: "error",
+              style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+            });
+            hideLoadingSm();
+          }
+        }, 2000);
       } catch (error) {
-        console.error(error);
+        toast("Gagal upload data sipil", {
+          type: "error",
+          style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+        });
+        hideLoadingSm();
       }
     };
 
@@ -196,7 +219,10 @@ const NewCivilForm = () => {
           const provinsiData = await response.json();
           setProvinsi(provinsiData);
         } catch (error) {
-          console.error(error);
+          toast("Gagal mendapatkan data provinsi", {
+            type: "error",
+            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+          });
         }
       };
       getProvinsi();
@@ -213,7 +239,10 @@ const NewCivilForm = () => {
           const getDataKota = await response.json();
           setKota(getDataKota);
         } catch (error) {
-          console.error(error);
+          toast("Gagal mendapatkan data kota", {
+            type: "error",
+            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+          });
         }
       };
       getKota();
@@ -230,7 +259,10 @@ const NewCivilForm = () => {
           const getDataKecamatan = await response.json();
           setKecamatan(getDataKecamatan);
         } catch (error) {
-          console.error(error);
+          toast("Gagal mendapatkan data kecamatan", {
+            type: "error",
+            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+          });
         }
       };
       getKecamatan();
@@ -247,7 +279,10 @@ const NewCivilForm = () => {
           const getDataKelurahan = await response.json();
           setKelurahan(getDataKelurahan);
         } catch (error) {
-          console.error(error);
+          toast("Gagal mendapatkan data kelurahan", {
+            type: "error",
+            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+          });
         }
       };
       getKelurahan();
@@ -657,7 +692,11 @@ const NewCivilForm = () => {
           }}
         />
         <div className="mt-10 flex justify-center">
-          <Button type="submit">Submit</Button>
+          <ButtonWithLoading
+            buttonContent="Submit"
+            loadingContent="Mohon tunggu sebentar..."
+            type="submit"
+          />
         </div>
       </form>
     </Form>
