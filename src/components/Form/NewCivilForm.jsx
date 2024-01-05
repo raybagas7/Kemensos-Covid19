@@ -30,6 +30,8 @@ import { convertDateToMilis, randomSuccessPost } from "@/lib/utils";
 import { services } from "@/lib/services";
 import ButtonWithLoading from "../Button/ButtonWithLoading";
 import { useLoading } from "@/store/loading";
+import { useRouter } from "next/router";
+import { useModal } from "@/store/modal";
 
 const MAX_KTP_SIZE = 2097152;
 const ALLOWED_IMAGE_TYPES = [
@@ -148,6 +150,8 @@ const NewCivilForm = () => {
     defaultValues: { nama: "" },
   });
   const { showLoadingSm, hideLoadingSm } = useLoading();
+  const { hideModal } = useModal();
+  const route = useRouter();
 
   const onSubmit = (value) => {
     const date = new Date();
@@ -187,8 +191,11 @@ const NewCivilForm = () => {
               type: "success",
             });
             hideLoadingSm();
+            hideModal();
+            route.push(`/civil/${payload.nik}`);
           } else {
             toast("Gagal upload data sipil", {
+              description: "Coba lagi",
               type: "error",
               style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
             });
@@ -197,6 +204,7 @@ const NewCivilForm = () => {
         }, 2000);
       } catch (error) {
         toast("Gagal upload data sipil", {
+          description: "Coba lagi",
           type: "error",
           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
         });
