@@ -31,8 +31,6 @@ const AlasanBantuan = ({ form }) => {
             </FormLabel>
             <Select
               onValueChange={(v) => {
-                console.log(v);
-                console.log(v === "Lainnya");
                 field.onChange(v);
                 if (v === "Lainnya") {
                   setLainnya(false);

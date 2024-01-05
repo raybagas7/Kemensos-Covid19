@@ -5,11 +5,9 @@ import * as z from "zod";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -155,8 +153,6 @@ const NewCivilForm = () => {
 
   const onSubmit = (value) => {
     const date = new Date();
-
-    console.log(value);
     const payload = {
       nama: value.nama,
       nik: parseInt(value.nik),
@@ -186,7 +182,6 @@ const NewCivilForm = () => {
         setTimeout(async () => {
           if (randomSuccessPost()) {
             const response = await services.postCivilData(payload);
-            console.log(response);
             toast("Berhasil upload data sipil", {
               type: "success",
             });
@@ -213,8 +208,6 @@ const NewCivilForm = () => {
     };
 
     postCivil();
-
-    console.log(payload);
   };
 
   const onChoosingLocation = (value, key) => {
@@ -298,9 +291,6 @@ const NewCivilForm = () => {
       getKelurahan();
     }
   }, [locationId.kecamatanId]);
-  console.log(form.getValues("alasan"));
-
-  console.log(locationId);
 
   if (!provinsi) {
     return <ReloadIcon className="m-5 h-10 w-10 animate-spin" />;
@@ -628,48 +618,6 @@ const NewCivilForm = () => {
               )}
             />
             <AlasanBantuan form={form} />
-            {/* <div className="space-y-3">
-              <FormField
-                control={form.control}
-                name="alasan"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Alasan</FormLabel>
-                    <Select
-                      onValueChange={(v) => {
-                        console.log(v);
-                        field.onChange(v);
-                      }}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Alasan membutuhkan bantuan" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="z-[150]">
-                        <SelectItem value="Kehilangan pekerjaan">
-                          Kehilangan pekerjaan
-                        </SelectItem>
-                        <SelectItem value="Kepala keluarga terdampak atau korban Covid-19">
-                          Kepala keluarga terdampak atau korban Covid-19
-                        </SelectItem>
-                        <SelectItem value="Tergolong fakir/miskin semenjak sebelum Covid-19">
-                          Tergolong fakir/miskin semenjak sebelum Covid-19
-                        </SelectItem>
-                        <SelectItem value="lainnya">Lainnya</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Input
-                disabled={form.getValues("alasan") === "lainnya"}
-                className="self-end"
-                type="text"
-              />
-            </div> */}
           </div>
         </div>
         <FormField
@@ -684,7 +632,6 @@ const NewCivilForm = () => {
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={(checked) => {
-                          console.log(checked);
                           field.onChange(checked);
                         }}
                       />
