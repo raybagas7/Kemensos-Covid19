@@ -1,40 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bantuan Sosial Kemensos Covid-19 (JDS)
 
-## Getting Started
+Aplikasi yang diperuntukan untuk input data sipil atau warga yang membutuhkan bantuan sosial dari pemerintah
 
-First, run the development server:
+## Demo
+
+- Website
+  [[Kemensos Covid-19]](https://kemensos-covid19.vercel.app)
+- JSON Server
+  [[vercel-cov19-jds-jsonserver]](https://vercel-cov19-jds-jsonserver.vercel.app)
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/raybagas7/Kemensos-Covid19.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```bash
+  cd Kemensos-Covid19
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Install dependencies
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+  npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Start the json server
 
-## Learn More
+```bash
+  npm run start:db
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the application without build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Start the application with build
 
-## Deploy on Vercel
+```bash
+  npm run build
+  npm run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Civil Form Requirement
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Data             | Type               | Description                                                                                                                                                                     |
+| :--------------- | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `nama`           | `string`           | **Required**                                                                                                                                                                    |
+| `nik`            | `number`           | **Required**                                                                                                                                                                    |
+| `nkk`            | `number`           | **Required**                                                                                                                                                                    |
+| `foto_ktp`       | `File`             | **Required** Maksimal 2MB, format JPG/JPEG/PNG/BMP                                                                                                                              |
+| `foto_kk`        | `File`             | **Required** Maksimal 2MB, format JPG/JPEG/PNG/BMP                                                                                                                              |
+| `umur`           | `number`           | **Required** Berumur lebih dari atau sama dengan 25 tahun                                                                                                                       |
+| `kelamin`        | `enum`             | **Required** Laki-laki, Perempuan                                                                                                                                               |
+| `provinsi`       | `enum`             | **Required** Berisikan pilihan seluruh Provinsi di Indonesia                                                                                                                    |
+| `kab_kota`       | `enum`             | **Required** Berisikan pilihan seluruh Kab/Kota berdasarkan Provinsi yang dipilih                                                                                               |
+| `kecamatan`      | `enum`             | **Required** Berisikan pilihan seluruh Kecamatan berdasarkan Kab/Kota yang dipilih                                                                                              |
+| `kelurahan_desa` | `enum`             | **Required** Berisikan pilihan seluruh Kelurahan berdasarkan Kecamatan yang dipilih                                                                                             |
+| `alamat`         | `string`           | **Required** Tidak lebih panjang dari 255 karakter                                                                                                                              |
+| `rt`             | `number`           | **Required**                                                                                                                                                                    |
+| `rw`             | `number`           | **Required**                                                                                                                                                                    |
+| `gaji_sebelum`   | `number`           | **Required**                                                                                                                                                                    |
+| `gaji_sesudah`   | `number`           | **Required**                                                                                                                                                                    |
+| `alasan`         | `enum atau string` | **Required** - Kehilangan pekerjaan - Kepala keluarga terdampak atau korban Covid-19 - Tergolong fakir/miskin semenjak sebelum Covid-19, atau - Lainnya: … (bisa diisi sendiri) |
+| `confirm`        | `boolean`          | **Required** true                                                                                                                                                               |
