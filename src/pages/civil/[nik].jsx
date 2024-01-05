@@ -1,6 +1,10 @@
+import LabeledContainer from "@/components/Container/LabeledContainer";
 import CoreLayout from "@/components/Layout/CoreLayout";
 import Modal from "@/components/Modal/Modal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { formatIDR } from "@/lib/utils";
+import Image from "next/image";
+
 import React from "react";
 
 const Civil = ({ dataSipil }) => {
@@ -52,9 +56,76 @@ const Civil = ({ dataSipil }) => {
             </div>
           </div>
         </div>
-        <div className="mt-5 flex w-full">
-          <div className="flex-1">a</div>
-          <div className="flex-1">s</div>
+        <div className="mt-5 flex w-full gap-5">
+          <div className="flex-1 space-y-5">
+            <LabeledContainer label="Alamat Lengkap">
+              <p>{dataSipil.alamat}</p>
+            </LabeledContainer>
+            <LabeledContainer className="flex" label="Pendapatan">
+              <div className="flex-1">
+                <p className="font-bold">Gaji Sebelum Pandemi</p>
+                <p
+                  className={`${
+                    parseInt(dataSipil.gaji_sebelum) <
+                    parseInt(dataSipil.gaji_sesudah)
+                      ? "text-red-500"
+                      : "text-green-500"
+                  } font-medium`}
+                >
+                  {formatIDR(dataSipil.gaji_sebelum)}
+                </p>
+              </div>
+              <div className="flex-1">
+                <p className="font-bold">Gaji Sesudah Pandemi</p>
+                <p
+                  className={`${
+                    parseInt(dataSipil.gaji_sebelum) >
+                    parseInt(dataSipil.gaji_sesudah)
+                      ? "text-red-500"
+                      : "text-green-500"
+                  } font-medium`}
+                >
+                  {formatIDR(dataSipil.gaji_sesudah)}
+                </p>
+              </div>
+            </LabeledContainer>
+            <LabeledContainer label="Alasan">
+              <p>{dataSipil.alasan}</p>
+            </LabeledContainer>
+          </div>
+          <div className="flex-[1.5]">
+            <LabeledContainer label="Data Dokumen">
+              <div className="mb-5 flex gap-3">
+                <div className="flex flex-col justify-between font-bold">
+                  <p>Nomor Induk Kependudukan</p>
+                  <p>Nomor Kartu Keluarga</p>
+                </div>
+                <div className="flex flex-col justify-between">
+                  <p>{dataSipil.nik}</p>
+                  <p>{dataSipil.nkk}</p>
+                </div>
+              </div>
+              <LabeledContainer
+                className="flex w-fit gap-3"
+                label={"Foto Dokumen"}
+              >
+                <Image
+                  alt="ktp-sipil"
+                  src={dataSipil.foto_ktp}
+                  className="h-auto min-w-56 cursor-pointer rounded-lg border-[1px] border-border hover:border-primary"
+                  width={500}
+                  height={500}
+                />
+                <Image
+                  alt="ktp-sipil"
+                  src={dataSipil.foto_kk}
+                  className="h-auto min-w-56 cursor-pointer rounded-lg border-[1px] border-border hover:border-primary"
+                  width={500}
+                  height={500}
+                />
+              </LabeledContainer>
+            </LabeledContainer>
+          </div>
         </div>
       </div>
     </main>
