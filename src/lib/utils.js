@@ -12,7 +12,7 @@ export const convertDateToMilis = (dateString) => {
 
 export const randomSuccessPost = () => {
   const randomValue = Math.random();
-  const threshold = 0.7;
+  const threshold = 0.5;
 
   return randomValue < threshold ? true : false;
 };

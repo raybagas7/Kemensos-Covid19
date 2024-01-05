@@ -195,7 +195,7 @@ const NewCivilForm = () => {
             route.push(`/civil/${payload.nik}`);
           } else {
             toast("Gagal upload data sipil", {
-              description: "Coba lagi",
+              description: <p className="text-white">Coba Lagi</p>,
               type: "error",
               style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
             });
