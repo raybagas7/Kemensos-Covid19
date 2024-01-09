@@ -250,45 +250,45 @@ const NewCivilForm = () => {
   //   }
   // }, [locationId.provinsiId]);
 
-  useEffect(() => {
-    if (locationId.kotaId) {
-      const getKecamatan = async () => {
-        try {
-          const response = await fetch(
-            `/api/kecamatan?kotaId=${locationId.kotaId}`,
-          );
-          const getDataKecamatan = await response.json();
-          setKecamatan(getDataKecamatan);
-        } catch (error) {
-          toast("Gagal mendapatkan data kecamatan", {
-            type: "error",
-            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-          });
-        }
-      };
-      getKecamatan();
-    }
-  }, [locationId.kotaId]);
+  // useEffect(() => {
+  //   if (locationId.kotaId) {
+  //     const getKecamatan = async () => {
+  //       try {
+  //         const response = await fetch(
+  //           `/api/kecamatan?kotaId=${locationId.kotaId}`,
+  //         );
+  //         const getDataKecamatan = await response.json();
+  //         setKecamatan(getDataKecamatan);
+  //       } catch (error) {
+  //         toast("Gagal mendapatkan data kecamatan", {
+  //           type: "error",
+  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+  //         });
+  //       }
+  //     };
+  //     getKecamatan();
+  //   }
+  // }, [locationId.kotaId]);
 
-  useEffect(() => {
-    if (locationId.kecamatanId) {
-      const getKelurahan = async () => {
-        try {
-          const response = await fetch(
-            `/api/kelurahan?kecamatanId=${locationId.kecamatanId}`,
-          );
-          const getDataKelurahan = await response.json();
-          setKelurahan(getDataKelurahan);
-        } catch (error) {
-          toast("Gagal mendapatkan data kelurahan", {
-            type: "error",
-            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-          });
-        }
-      };
-      getKelurahan();
-    }
-  }, [locationId.kecamatanId]);
+  // useEffect(() => {
+  //   if (locationId.kecamatanId) {
+  //     const getKelurahan = async () => {
+  //       try {
+  //         const response = await fetch(
+  //           `/api/kelurahan?kecamatanId=${locationId.kecamatanId}`,
+  //         );
+  //         const getDataKelurahan = await response.json();
+  //         setKelurahan(getDataKelurahan);
+  //       } catch (error) {
+  //         toast("Gagal mendapatkan data kelurahan", {
+  //           type: "error",
+  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+  //         });
+  //       }
+  //     };
+  //     getKelurahan();
+  //   }
+  // }, [locationId.kecamatanId]);
 
   // if (!provinsi) {
   //   return <ReloadIcon className="m-5 h-10 w-10 animate-spin" />;
@@ -502,7 +502,9 @@ const NewCivilForm = () => {
               <KelurahanField
                 form={form}
                 kelurahan={kelurahan}
+                setKelurahan={setKelurahan}
                 onChoosingLocation={onChoosingLocation}
+                locationId={locationId}
               />
               <div className="flex gap-3">
                 <FormField
