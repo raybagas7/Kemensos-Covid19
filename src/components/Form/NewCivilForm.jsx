@@ -494,8 +494,10 @@ const NewCivilForm = () => {
               <KecamatanField
                 form={form}
                 kecamatan={kecamatan}
+                setKecamatan={setKecamatan}
                 onChoosingLocation={onChoosingLocation}
                 setKelurahan={setKelurahan}
+                locationId={locationId}
               />
               <KelurahanField
                 form={form}

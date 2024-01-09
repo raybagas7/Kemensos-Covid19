@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormField,
@@ -21,14 +21,58 @@ import {
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { toast } from "sonner";
 
 const KecamatanField = ({
   form,
   kecamatan,
+  setKecamatan,
   onChoosingLocation,
   setKelurahan,
+  locationId,
 }) => {
   const [open, setOpen] = useState(false);
+  const [firstInitiate, setFirstInitiate] = useState(true);
+
+  useEffect(() => {
+    if (locationId.kotaId) {
+      const getKecamatan = async () => {
+        try {
+          const response = await fetch(
+            `/api/kecamatan?kotaId=${locationId.kotaId}`,
+          );
+          const getDataKecamatan = await response.json();
+          if (firstInitiate) {
+            setFirstInitiate(false);
+          }
+          setTimeout(() => {
+            setKecamatan(getDataKecamatan);
+          }, 1000);
+        } catch (error) {
+          toast("Gagal mendapatkan data kecamatan", {
+            type: "error",
+            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+          });
+        }
+      };
+      getKecamatan();
+    }
+  }, [locationId.kotaId, setKecamatan, firstInitiate]);
+
+  const isLoading = () => {
+    if (firstInitiate) {
+      return (
+        <div className=" text-destructive">Pilih kota terlebih dahulu</div>
+      );
+    }
+    return (
+      <div className="flex items-center gap-3">
+        <p>Mengambil data kecamatan</p>
+        <ReloadIcon className="animate-spin" />
+      </div>
+    );
+  };
 
   return (
     <FormField
@@ -56,7 +100,9 @@ const KecamatanField = ({
                     ? kecamatan.find(
                         (kecamatan) => kecamatan.name === field.value,
                       )?.name
-                    : "Pilih Kecamatan"}
+                    : kecamatan === undefined
+                      ? isLoading()
+                      : "Pilih Kecamatan"}
                   <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
