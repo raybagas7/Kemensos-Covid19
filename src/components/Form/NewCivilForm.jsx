@@ -213,23 +213,23 @@ const NewCivilForm = () => {
     setLocationId({ ...locationId, [key]: value });
   };
 
-  useEffect(() => {
-    if (!provinsi) {
-      const getProvinsi = async () => {
-        try {
-          const response = await fetch("/api/provinsi");
-          const provinsiData = await response.json();
-          setProvinsi(provinsiData);
-        } catch (error) {
-          toast("Gagal mendapatkan data provinsi", {
-            type: "error",
-            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-          });
-        }
-      };
-      getProvinsi();
-    }
-  }, [provinsi]);
+  // useEffect(() => {
+  //   if (!provinsi) {
+  //     const getProvinsi = async () => {
+  //       try {
+  //         const response = await fetch("/api/provinsi");
+  //         const provinsiData = await response.json();
+  //         setProvinsi(provinsiData);
+  //       } catch (error) {
+  //         toast("Gagal mendapatkan data provinsi", {
+  //           type: "error",
+  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+  //         });
+  //       }
+  //     };
+  //     getProvinsi();
+  //   }
+  // }, [provinsi]);
 
   useEffect(() => {
     if (locationId.provinsiId) {
@@ -291,9 +291,9 @@ const NewCivilForm = () => {
     }
   }, [locationId.kecamatanId]);
 
-  if (!provinsi) {
-    return <ReloadIcon className="m-5 h-10 w-10 animate-spin" />;
-  }
+  // if (!provinsi) {
+  //   return <ReloadIcon className="m-5 h-10 w-10 animate-spin" />;
+  // }
 
   return (
     <Form {...form}>
@@ -478,6 +478,7 @@ const NewCivilForm = () => {
                 form={form}
                 provinsi={provinsi}
                 onChoosingLocation={onChoosingLocation}
+                setProvinsi={setProvinsi}
                 setKota={setKota}
                 setKecamatan={setKecamatan}
                 setKelurahan={setKelurahan}
