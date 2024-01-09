@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormField,
-  FormDescription,
   FormItem,
   FormLabel,
   FormMessage,
@@ -23,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import ButtonWithLoading from "../Button/ButtonWithLoading";
+import { toast } from "sonner";
 
 const ProvinsiField = ({
   form,
@@ -81,7 +80,10 @@ const ProvinsiField = ({
                   {field.value ? (
                     provinsi.find((prov) => prov.name === field.value)?.name
                   ) : provinsi === undefined ? (
-                    <ReloadIcon className="animate-spin" />
+                    <div className="flex items-center gap-3">
+                      <p>Mengambil data provinsi</p>
+                      <ReloadIcon className="animate-spin" />
+                    </div>
                   ) : (
                     "Pilih Provinsi"
                   )}

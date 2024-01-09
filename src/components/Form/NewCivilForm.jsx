@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { ReloadIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
 
 import {
@@ -231,25 +230,25 @@ const NewCivilForm = () => {
   //   }
   // }, [provinsi]);
 
-  useEffect(() => {
-    if (locationId.provinsiId) {
-      const getKota = async () => {
-        try {
-          const response = await fetch(
-            `/api/kota?provinsiId=${locationId.provinsiId}`,
-          );
-          const getDataKota = await response.json();
-          setKota(getDataKota);
-        } catch (error) {
-          toast("Gagal mendapatkan data kota", {
-            type: "error",
-            style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-          });
-        }
-      };
-      getKota();
-    }
-  }, [locationId.provinsiId]);
+  // useEffect(() => {
+  //   if (locationId.provinsiId) {
+  //     const getKota = async () => {
+  //       try {
+  //         const response = await fetch(
+  //           `/api/kota?provinsiId=${locationId.provinsiId}`,
+  //         );
+  //         const getDataKota = await response.json();
+  //         setKota(getDataKota);
+  //       } catch (error) {
+  //         toast("Gagal mendapatkan data kota", {
+  //           type: "error",
+  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
+  //         });
+  //       }
+  //     };
+  //     getKota();
+  //   }
+  // }, [locationId.provinsiId]);
 
   useEffect(() => {
     if (locationId.kotaId) {
@@ -487,8 +486,10 @@ const NewCivilForm = () => {
                 form={form}
                 kota={kota}
                 onChoosingLocation={onChoosingLocation}
+                setKota={setKota}
                 setKecamatan={setKecamatan}
                 setKelurahan={setKelurahan}
+                locationId={locationId}
               />
               <KecamatanField
                 form={form}
