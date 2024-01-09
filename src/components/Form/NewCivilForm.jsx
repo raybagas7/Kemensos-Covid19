@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProvinsiField from "./ProvinsiField";
 import KotaField from "./KotaField";
 import KecamatanField from "./KecamatanField";
@@ -211,88 +211,6 @@ const NewCivilForm = () => {
   const onChoosingLocation = (value, key) => {
     setLocationId({ ...locationId, [key]: value });
   };
-
-  // useEffect(() => {
-  //   if (!provinsi) {
-  //     const getProvinsi = async () => {
-  //       try {
-  //         const response = await fetch("/api/provinsi");
-  //         const provinsiData = await response.json();
-  //         setProvinsi(provinsiData);
-  //       } catch (error) {
-  //         toast("Gagal mendapatkan data provinsi", {
-  //           type: "error",
-  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-  //         });
-  //       }
-  //     };
-  //     getProvinsi();
-  //   }
-  // }, [provinsi]);
-
-  // useEffect(() => {
-  //   if (locationId.provinsiId) {
-  //     const getKota = async () => {
-  //       try {
-  //         const response = await fetch(
-  //           `/api/kota?provinsiId=${locationId.provinsiId}`,
-  //         );
-  //         const getDataKota = await response.json();
-  //         setKota(getDataKota);
-  //       } catch (error) {
-  //         toast("Gagal mendapatkan data kota", {
-  //           type: "error",
-  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-  //         });
-  //       }
-  //     };
-  //     getKota();
-  //   }
-  // }, [locationId.provinsiId]);
-
-  // useEffect(() => {
-  //   if (locationId.kotaId) {
-  //     const getKecamatan = async () => {
-  //       try {
-  //         const response = await fetch(
-  //           `/api/kecamatan?kotaId=${locationId.kotaId}`,
-  //         );
-  //         const getDataKecamatan = await response.json();
-  //         setKecamatan(getDataKecamatan);
-  //       } catch (error) {
-  //         toast("Gagal mendapatkan data kecamatan", {
-  //           type: "error",
-  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-  //         });
-  //       }
-  //     };
-  //     getKecamatan();
-  //   }
-  // }, [locationId.kotaId]);
-
-  // useEffect(() => {
-  //   if (locationId.kecamatanId) {
-  //     const getKelurahan = async () => {
-  //       try {
-  //         const response = await fetch(
-  //           `/api/kelurahan?kecamatanId=${locationId.kecamatanId}`,
-  //         );
-  //         const getDataKelurahan = await response.json();
-  //         setKelurahan(getDataKelurahan);
-  //       } catch (error) {
-  //         toast("Gagal mendapatkan data kelurahan", {
-  //           type: "error",
-  //           style: { backgroundColor: "#FF0000", color: "#FFFFFF" },
-  //         });
-  //       }
-  //     };
-  //     getKelurahan();
-  //   }
-  // }, [locationId.kecamatanId]);
-
-  // if (!provinsi) {
-  //   return <ReloadIcon className="m-5 h-10 w-10 animate-spin" />;
-  // }
 
   return (
     <Form {...form}>
